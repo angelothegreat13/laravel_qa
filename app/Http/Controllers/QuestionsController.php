@@ -14,7 +14,6 @@ class QuestionsController extends Controller
         $questions = Question::with('user')->latest()->paginate(5);
         return view('questions.index',compact('questions'));
     }
-
    
     public function create()
     {
@@ -27,7 +26,7 @@ class QuestionsController extends Controller
     {
         $request->user()->questions()->create($request->only('title', 'body'));
 
-        return redirect()->route('questions.index')->with('success', 'Your question has been submitted');
+        return redirect()->route('questions.index')->with('success', 'Your question has been Submitted.');
     }
 
     public function show(Question $question)
@@ -49,7 +48,9 @@ class QuestionsController extends Controller
 
     public function destroy(Question $question)
     {
+        $question->delete();
 
+        return redirect('/questions')->with('success', 'Your question has been Deleted.');
     }
 
 
