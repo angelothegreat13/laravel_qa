@@ -9,7 +9,7 @@
                     <div class="d-flex align-items-left">
                         <h3>All Questions</h3>
                         <div class="ml-auto">
-                            <a href="{{ route('questions.create') }}" class="btn btn-outline-info">Ask Question</a>
+                            <a href="{{ route('questions.create') }}" class="btn btn-outline-info"><i class="fas fa-question-circle"></i> Ask Question</a>
                         </div>
                     </div>
                 </div>
@@ -30,16 +30,22 @@
                                 {{ $question->views .' '. str_plural('view', $question->views) }}
                             </div>
                         </div>
+                        
                         <div class="media-body">
                             <div class="d-flex align-items-center">
                                 <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 <div class="ml-auto">
-                                    <a href="{{ route('questions.edit',$question->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                                @if(Auth::user()->can('update-question',$question))
+                                    <a href="{{ route('questions.edit',$question->id) }}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+                                @endif
+
+                                @if(Auth::user()->can('delete-question',$question))
                                     <form class="form-delete" action="{{ route('questions.destroy',$question->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">DELETE</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
+                                @endif
                                     
                                 </div>
                             </div>
