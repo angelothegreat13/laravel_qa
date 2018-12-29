@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
-{
+{   
+    
+    public function __construct()
+    {
+        $this->middleware('auth',['index','show']);
+    }
     
     public function index()
     {
@@ -17,8 +22,8 @@ class QuestionsController extends Controller
    
     public function create()
     {
-        $questions = new Question;
-        return view('questions.create',compact('questions'));
+        $question = new Question;
+        return view('questions.create',compact('question'));
     }
 
     public function store(AskQuestionRequest $request)
@@ -35,26 +40,21 @@ class QuestionsController extends Controller
 
     public function edit(Question $question)
     {   
-        if (\Gate::denies('update-question',$question)) {
-            abort(403,'Access Denied');
-        }
+        $this->authorize('update', $question);
         return view('questions.edit',compact('question'));
     }
    
     public function update(AskQuestionRequest $request, Question $question)
     {   
-        if (\Gate::denies('update-question',$question)) {
-            abort(403,'Access Denied');
-        }
+       
+        $this->authorize('update', $question);
         $question->update($request->only('title', 'body'));
         return redirect('/questions')->with('success', 'Your question has been Updated.');        
     }
 
     public function destroy(Question $question)
     {
-        if (\Gate::denies('delete-question',$question)) {
-            abort(403,'Access Denied');
-        }
+        $this->authorize('delete', $question);
         $question->delete();
         return redirect('/questions')->with('success', 'Your question has been Deleted.');
     }
