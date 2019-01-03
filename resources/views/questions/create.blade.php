@@ -5,11 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h3>Ask Question</h3>
                         <div class="ml-auto">
-                            <a href="{{ route('questions.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>&nbsp; Back to all Questions</a>
+                            <a href="{{ route('questions.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                         </div>
                     </div>
                 </div>
