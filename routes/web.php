@@ -11,3 +11,6 @@ Route::resource('questions.answers','AnswersController')->except(['index', 'crea
 Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show'); //custom route for show
 Route::post('/answers/{answer}/accept','AcceptAnswerController')->name('answers.accept'); //this means laravel will called the __invoker method automatically because there is no method name
 
+Route::post('/questions/{question}/favorites', 'FavoritesController@store')->name('questions.favorite');
+Route::delete('/questions/{question}/favorites', 'FavoritesController@destroy')->name('questions.unfavorite');
+
